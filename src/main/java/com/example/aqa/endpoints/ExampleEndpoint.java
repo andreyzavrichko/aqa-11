@@ -2,11 +2,14 @@ package com.example.aqa.endpoints;
 
 import com.example.aqa.models.CustomObject;
 import org.json.JSONObject;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @RestController
@@ -40,18 +43,32 @@ public class ExampleEndpoint {
         lastStr = null;
     }
 
-    @GetMapping(path = "/getJson")
-    public JSONObject getJson() {
+    @GetMapping(path = "/getJson", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getJson() {
         JSONObject newJsonObject = new JSONObject();
         newJsonObject.put("query", "куртка");
         newJsonObject.put("page", "0");
         newJsonObject.put("size", "10");
 
-        return newJsonObject;
+
+        return newJsonObject.toString();
     }
 
     @GetMapping(path = "/getObject")
     public CustomObject getObject() {
         return new CustomObject("куртка", 0, 10);
     }
+
+
+
+
+    @GetMapping(path = "/getJson2", produces = MediaType.APPLICATION_JSON_VALUE)
+   public Map<String, Object> getJson2() {
+
+            Map<String, Object> result = new HashMap<>();
+            result.put("firstname", "Dave");
+            result.put("lastname", "Matthews");
+
+            return result;
+        }
 }
